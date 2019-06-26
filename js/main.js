@@ -1,22 +1,48 @@
-!function(){
+!function(){ 
+    let duration = 50
+    let id = null
+    let container = document.querySelector('#code')
+    let styleTag = document.querySelector('#styleTag')
 	function writeCode(prefix, code, fn){
-		let container = document.querySelector('#code')
-		let styleTag = document.querySelector('#styleTag')
 		let n = 0
-		let id = setInterval(()=>{
+		id = setTimeout(function run(){
 			n += 1
 			container.innerHTML = code.substring(0,n)
 			styleTag.innerHTML = code.substring(0,n)
 			container.scrollTop = container.scrollHeight
-			if(n >= code.length){
-				window.clearInterval(id)
-				fn && fn.call()
-			}
-		}, 20)
+			if(n < code.length){
+				id = setTimeout(run, duration)
+			}else{
+                fn && fn.call()
+            }
+		}, duration)
 	}
-	let code = `
-/*
- * 首先，需要准备皮卡丘的皮
+    $('.actions').on('click', 'button', function(e){
+        let $button = $(e.currentTarget) // 点击的button
+        let speed = $button.attr('data-speed')
+        $button.addClass('active')
+            .siblings('.active').removeClass('active')
+        switch(speed){
+            case 'slow':
+                duration = 100
+                break
+            case 'normal':
+                duration = 50
+                break
+            case 'fast':
+                duration = 10
+                break
+            case 'exit':
+                window.clearTimeout(id)
+                container.innerHTML = code
+                styleTag.innerHTML = code
+                container.scrollTop = container.scrollHeight
+                break
+        }
+    })
+	let code = `/*
+ * 今天为大家画一只可爱的皮卡丘
+ * 首先，需要准备皮卡丘的“皮”
  */
 
 .preview{
@@ -196,4 +222,5 @@
  */
 `
 	writeCode('', code)
+
 }.call()
