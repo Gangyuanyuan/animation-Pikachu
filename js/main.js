@@ -7,7 +7,8 @@
 		let n = 0
 		id = setTimeout(function run(){
 			n += 1
-			container.innerHTML = code.substring(0,n)
+            // CSS 代码高亮
+			container.innerHTML = Prism.highlight(code.substring(0, n), Prism.languages.css, 'css');
 			styleTag.innerHTML = code.substring(0,n)
 			container.scrollTop = container.scrollHeight
 			if(n < code.length){
@@ -34,14 +35,14 @@
                 break
             case 'exit':
                 window.clearTimeout(id)
-                container.innerHTML = code
+                container.innerHTML = Prism.highlight(code, Prism.languages.css, 'css');
                 styleTag.innerHTML = code
                 container.scrollTop = container.scrollHeight
                 break
         }
     })
 	let code = `/*
- * 今天为大家画一只可爱的皮卡丘
+ * 用 CSS3 来画一只可爱的皮卡丘吧！
  * 首先，需要准备皮卡丘的“皮”
  */
 
@@ -59,7 +60,23 @@
 }
 
 /*
- * 接下来，画一只鼻子
+ * 高亮代码
+ */
+.token.selector{
+    color: #690;
+}
+.token.property{
+    color: #905;
+}
+.token.function{
+    color: #dd4a68;
+}
+.token.punctuation{
+    color: #999;
+}
+
+/*
+ * 接下来是它的鼻子
  */
 
 .nose{
@@ -89,7 +106,7 @@
 }
 
 /*
- * 眼睛里面的眼珠
+ * 别忘了它的眼眸
  */
 
 .eye::before{
@@ -106,7 +123,7 @@
 }
 
 /*
- * 左眼在左边
+ * 左眼移动到左边
  */
 
 .eye.left{
@@ -115,7 +132,7 @@
 }
 
 /*
- * 右眼在右边
+ * 右眼也要去右边
  */
 
 .eye.right{
@@ -138,7 +155,7 @@
 }
 
 /*
- * 将脸放到正确的位置
+ * 将脸蛋放到正确的位置
  */
 
 .face.left{
@@ -170,7 +187,7 @@
     right: 50%;
 }
 .upperLip.right{
-	border-left: none;
+    border-left: none;
     border-top: none;
     border-bottom-right-radius: 40px 25px;
     transform: rotate(20deg);
@@ -202,7 +219,7 @@
 }
 
 /*
- * 小舌头
+ * 最后是小舌头
  */
 
 .lowerLip::after{
